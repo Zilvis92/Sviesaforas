@@ -1,0 +1,19 @@
+.bulb {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  opacity: 0.3;
+  margin: 8px auto;
+}
+.red {
+  background: red;
+}
+.yellow {
+  background: yellow;
+}
+.green {
+  background: green;
+}
+.on {
+  opacity: 1;
+}
