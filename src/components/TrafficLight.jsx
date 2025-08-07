@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './TrafficLight.css';
 
-const TrafficLight = () => {
-    const [color, setColor] = useState("red");
+const nextColor = {
+  red: "yellow",
+  yellow: "green",
+  green: "red",
+};
 
-    const handleNext = () => {
-        const next = {
-            red: "yellow",
-            yellow: "green",
-            green: "red",
-        };
-        setColor(next[color]);
-    };
+const TrafficLight = () => {
+  const [color, setColor] = useState("red");
+
+  const handleNext = () => {
+    setColor(nextColor[color]);
+  };
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setColor(prevColor => nextColor[prevColor]);
+    }, 2000);
+
+    return () => clearInterval(intervalId);
+  }, []);
     
     return (
         <div>
