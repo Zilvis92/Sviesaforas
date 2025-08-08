@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from "react";
 import './TrafficLight.css';
 
-const nextColor = {
-  red: "yellow",
-  yellow: "green",
-  green: "red",
-};
+const colorOrder = ["red", "yellow", "green"];
 
 const TrafficLight = () => {
   const [color, setColor] = useState("red");
+  const [direction, setDirection] = useState("forward");
 
   const handleNext = () => {
-    setColor(nextColor[color]);
+    const currentIndex = colorOrder.indexOf(color);
+
+    let nextIndex;
+    if (direction === "forward") {
+      nextIndex = currentIndex + 1;
+      if (nextIndex >= colorOrder.length) {
+        nextIndex = colorOrder.length - 2;
+        setDirection("backward");
+      }
+    } else {
+      nextIndex = currentIndex - 1;
+      if (nextIndex < 0) {
+        nextIndex = 1;
+        setDirection("forward");
+      }
+    }
+
+    setColor(colorOrder[nextIndex]);
   };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setColor(prevColor => nextColor[prevColor]);
+      handleNext();
     }, 2000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [color, direction]);
     
     return (
         <div>
